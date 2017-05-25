@@ -1016,7 +1016,7 @@ abstract class Collections_Archon
       {
          $preps[$query] = $this->mdb2->prepare($query, $types, MDB2_PREPARE_RESULT);
       }
-            $result = $preps[$query]->execute($vars);
+        $result = $preps[$query]->execute($vars);
       if(pear_isError($result))
       {
          trigger_error($result->getMessage(), E_USER_ERROR);
