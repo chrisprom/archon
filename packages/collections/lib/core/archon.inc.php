@@ -992,9 +992,12 @@ abstract class Collections_Archon
 
       if(is_natural($CollectionIdentifier))
       {
-         $minLengthQuery = " OR CollectionIdentifier LIKE ?"; // replace = with Like 
+         $minLengthQuery = " OR CollectionIdentifier = ?";
+         //$minLengthQuery = " OR CollectionIdentifier LIKE ?"; // replace = with Like 
          $minLengthTypes = array('text');
-         $minLengthVars = array(str_pad("%$CollectionIdentifier%", CONFIG_COLLECTIONS_COLLECTION_IDENTIFIER_MINIMUM_LENGTH, "0", STR_PAD_LEFT)); //added wildcards with $CollectionIdentifier for partial search
+         $minLengthVars = array(str_pad($CollectionIdentifier, CONFIG_COLLECTIONS_COLLECTION_IDENTIFIER_MINIMUM_LENGTH, "0", STR_PAD_LEFT));
+         //$minLengthVars = array(str_pad("%$CollectionIdentifier%", CONFIG_COLLECTIONS_COLLECTION_IDENTIFIER_MINIMUM_LENGTH, "0", STR_PAD_LEFT)); //added wildcards with $CollectionIdentifier for partial search
+        
       }
       else
       {
@@ -1003,15 +1006,17 @@ abstract class Collections_Archon
          $minLengthVars = array();
       }
 
-      $query = "SELECT ID FROM tblCollections_Collections WHERE ClassificationID = ? AND (CollectionIdentifier LIKE ?$minLengthQuery);"; // replace CollectionIdentifier = with CollectionIdentifier Like 
+	  $query = "SELECT ID FROM tblCollections_Collections WHERE ClassificationID = ? AND (CollectionIdentifier = ?$minLengthQuery);";
+ 	  //$query = "SELECT ID FROM tblCollections_Collections WHERE ClassificationID = ? AND (CollectionIdentifier LIKE ?$minLengthQuery);"; // replace CollectionIdentifier = with CollectionIdentifier Like 
       $types = array_merge(array('integer', 'text'), $minLengthTypes);
-      $vars = array_merge(array($ClassificationID, "%$CollectionIdentifier%"), $minLengthVars); //added wildcards with $CollectionIdentifier for partial search
+      $vars = array_merge(array($ClassificationID, $CollectionIdentifier), $minLengthVars);
+      //$vars = array_merge(array($ClassificationID, "%$CollectionIdentifier%"), $minLengthVars); //added wildcards with $CollectionIdentifier for partial search
 
       if(!isset($preps[$query]))
       {
          $preps[$query] = $this->mdb2->prepare($query, $types, MDB2_PREPARE_RESULT);
       }
-      $result = $preps[$query]->execute($vars);
+            $result = $preps[$query]->execute($vars);
       if(pear_isError($result))
       {
          trigger_error($result->getMessage(), E_USER_ERROR);
