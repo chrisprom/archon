@@ -1011,10 +1011,9 @@ abstract class Collections_Archon
       $types = array_merge(array('integer', 'text'), $minLengthTypes);
       $vars = array_merge(array($ClassificationID, $CollectionIdentifier), $minLengthVars);
       //$vars = array_merge(array($ClassificationID, "%$CollectionIdentifier%"), $minLengthVars); //added wildcards with $CollectionIdentifier for partial search
-
       if(!isset($preps[$query]))
       {
-         $preps[$query] = $this->mdb2->prepare($query, $types, MDB2_PREPARE_RESULT);
+        $preps[$query] = $this->mdb2->prepare($query, $types, MDB2_PREPARE_RESULT);
       }
         $result = $preps[$query]->execute($vars);
       if(pear_isError($result))
