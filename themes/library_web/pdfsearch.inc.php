@@ -12,7 +12,7 @@ isset($_ARCHON) or die();
 <h2 style='margin-top:.1em'><label for="q">PDF/Deep Search</label></h2>
 <div style='text-align:center'>				
     <form name="form1" action="http://www.google.com/search" class="search">
-    <input type="hidden" name="hq" value="inurl:www.library.illinois.edu/archives/uasfa" />
+    <input type="hidden" name="hq" value="inurl:archives.library.illinois.edu/uasfa" />
     <input type="hidden" name="safe" value="off" />
     <input type="hidden" name="filter" value="0" />
 	<input id="q" type="text" size="25" name="q" class="searchinput" style='border:solid 1px #ddd'>
